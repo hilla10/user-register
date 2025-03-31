@@ -55,68 +55,13 @@ Run the script to create database tables:
 node database/createTable.js
 ```
 
-### 5. Start the Server
-```sh
-npm start
-```
-The backend server will run on `http://localhost:3000`
 
-## API Endpoints
-### Authentication
-- `POST /register` - Register a new user
-- `POST /login` - Log in a user and get a token
-- `GET /profile` - Get user profile (Requires token)
-
-### File Upload
-- `POST /upload` - Upload an image (Requires token)
-
-## License
-This project is licensed under the MIT License.
-
----
-**Contributors:**
-- Your Name (@your-github-username)
-
-# Project Name
-
-## Overview
-This project consists of a full-stack web application with a React.js frontend and a Node.js/Express.js backend using a MySQL database.
-
-## Features
-- User authentication (JWT-based)
-- File upload with Multer
-- Protected routes for authenticated users
-- REST API for CRUD operations
-- Database integration with MySQL
-
----
-
-## Backend Setup
-
-### Prerequisites
-- Node.js (v16+ recommended)
-- MySQL database
-
-### Installation
-1. Clone the repository:
-   ```sh
-   git clone https://github.com/your-username/your-repo.git
-   cd your-repo/backend
-   ```
-2. Install dependencies:
-   ```sh
-   npm install
-   ```
-3. Set up the database:
-   - Configure your MySQL connection in `database/dbConfig.js`
-   - Create tables by running:
-     ```sh
-     node database/createTable.js
-     ```
 4. Start the server:
-   ```sh
-   npm start
-   ```
+```sh
+npm run dev
+```
+   
+The backend server will run on `http://localhost:3000`
 
 ### API Endpoints
 | Method | Endpoint | Description |
