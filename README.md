@@ -40,11 +40,12 @@ npm install
 ```
 
 ### 3. Set Up Environment Variables
-Create a `.env` file in the `backend` directory and add the following:
+Create a `.env` file in the `backend` directory and add the following: in the JWT_SECRET you can pass what ever you want
 ```
+PORT=3000
 DB_HOST=your-database-host
 DB_USER=your-database-username
-DB_PASSWORD=your-database-password
+DB_PASS=your-database-password
 DB_NAME=your-database-name
 JWT_SECRET=your-jwt-secret-key
 ```
