@@ -1,14 +1,19 @@
 import React from 'react';
 import { AuthProvider } from '../context/AuthContext';
 import { Routes, Route } from 'react-router-dom';
-import UserPage from './components/UserPage';
-import AdminPage from './components/AdminPage';
+import UserPage from './pages/UserPage';
+import AdminPage from './pages/AdminPage';
 import PrivatePage from './components/PrivatePage';
-import Login from './components/Login';
-import Register from './components/Register';
-import Unauthorized from './components/unauthorized';
+import Login from './pages/Login';
+import Register from './pages/Register';
+import Unauthorized from './pages/unauthorized';
 import UploadedImage from './components/UploadedImage';
-import Home from './components/Home';
+import Home from './pages/Home';
+import User from './pages/User';
+import Grades from './pages/Grade';
+import Teacher from './pages/Teacher';
+import Update from './pages/Update';
+import Create from './pages/Create';
 
 const App = () => {
   return (
@@ -24,6 +29,46 @@ const App = () => {
             element={
               <PrivatePage roles={['admin']}>
                 <AdminPage />
+              </PrivatePage>
+            }
+          />
+          <Route
+            path='/users'
+            element={
+              <PrivatePage roles={['admin']}>
+                <User />
+              </PrivatePage>
+            }
+          />
+          <Route
+            path='/teacher'
+            element={
+              <PrivatePage roles={['admin', 'teacher']}>
+                <Teacher />
+              </PrivatePage>
+            }
+          />
+          <Route
+            path='/create'
+            element={
+              <PrivatePage roles={['admin', 'teacher']}>
+                <Create />
+              </PrivatePage>
+            }
+          />
+          <Route
+            path='/update/:id'
+            element={
+              <PrivatePage roles={['admin', 'teacher']}>
+                <Update />
+              </PrivatePage>
+            }
+          />
+          <Route
+            path='/grade'
+            element={
+              <PrivatePage roles={['admin', 'teacher']}>
+                <Grades />
               </PrivatePage>
             }
           />
