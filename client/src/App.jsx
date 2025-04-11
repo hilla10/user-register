@@ -1,14 +1,14 @@
 import React from 'react';
 import { AuthProvider } from '../context/AuthContext';
 import { Routes, Route } from 'react-router-dom';
-import UserPage from './components/UserPage';
-import AdminPage from './components/AdminPage';
-import PrivatePage from './components/PrivatePage';
-import Login from './components/Login';
-import Register from './components/Register';
-import Unauthorized from './components/unauthorized';
+import UserPage from './pages/UserPage';
+import AdminPage from './pages/AdminPage';
+import PrivatePage from './pages/PrivatePage';
+import Login from './pages/Login';
+import Register from './pages/Register';
+import Unauthorized from './pages/Unauthorized';
 import UploadedImage from './components/UploadedImage';
-import Home from './components/Home';
+import Home from './pages/Home';
 
 const App = () => {
   return (

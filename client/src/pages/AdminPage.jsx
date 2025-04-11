@@ -42,16 +42,13 @@ const AdminPage = () => {
 
     setLoading(true);
     try {
-      const response = await axios.post(
-        'http://localhost:3000/api/upload',
-        formData,
-        {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-            Authorization: `Bearer ${token?.userToken || ''}`,
-          },
-        }
-      );
+      const apiUrl = `${import.meta.env.VITE_API_URL}`;
+      const response = await axios.post(`${apiUrl}/api/upload`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          Authorization: `Bearer ${token?.userToken || ''}`,
+        },
+      });
 
       if (response?.data?.success) {
         setMessage('File uploaded successfully!');

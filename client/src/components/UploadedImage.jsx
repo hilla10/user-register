@@ -2,15 +2,14 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
+const apiUrl = import.meta.env.VITE_API_URL;
 const UploadedImage = () => {
   const [data, setData] = useState([]);
   const { id } = useParams();
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios(
-          `http://localhost:3000/api/upload/${parseInt(id)}`
-        );
+        const response = await axios(`${apiUrl}/api/upload/${parseInt(id)}`);
         // console.log(response);
         if (response?.data?.success) {
           //   console.log('fetching successfully');
@@ -34,7 +33,7 @@ const UploadedImage = () => {
           <div key={id} className=' p-2 w-full'>
             {' '}
             <img
-              src={`http://localhost:3000/${file_path}`}
+              src={`${apiUrl}/${file_path}`}
               alt={`Uploaded file ${id}`}
               className=' object-cover rounded-lg shadow-lg'
             />
