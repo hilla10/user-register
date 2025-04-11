@@ -10,7 +10,7 @@ import uniqueId from '../helper/generateUniqueId.js';
 const register = async (formData) => {
   try {
     // Destructure the formData object to extract user inputs
-    const { username, email, password, role,first_name, last_name, phone_number, date_of_birth } = formData;
+    const { username, email, password, role } = formData;
     // SQL query to check if a user already exists with the provided email
 
     const q = `SELECT * FROM users WHERE email = ? OR username = ?`;
@@ -46,18 +46,13 @@ const register = async (formData) => {
     }
 
     // Check for missing required fields (username, email, password)
-    if (username === '' || password === '' || email === '' || first_name === '' || last_name === '' || phone_number === '' || date_of_birth === '') {
+    if (username === '' || password === '' || email === '') {
       const missingFields = [];
 
       // Add missing fields to the array for a custom message
       if (username === '') missingFields.push('username');
       if (password === '') missingFields.push('password');
       if (email === '') missingFields.push('email');
-      if (first_name === '') missingFields.push('first_name');
-      if (last_name === '') missingFields.push('last_name');
-      if (phone_number === '') missingFields.push('phone_number');
-      if (date_of_birth === '') missingFields.push('date_of_birth');
-
 
       // Construct the message to inform the user of the missing fields
       const message = {
@@ -80,19 +75,15 @@ const register = async (formData) => {
     const newUserId = uniqueId();
 
     // SQL query to insert the new user into the users table
-    const sql = `INSERT INTO users (user_id, username,  password, role, first_name, last_name, email, phone_number, date_of_birth) VALUES (?, ?, ?, ?, ?,?, ?, ?, ?)`;
+    const sql = `INSERT INTO users (user_id, username, email, password, role) VALUES (?, ?, ?, ?, ?)`;
 
     // Execute the insert query with the provided data
     const rows = await query(sql, [
       newUserId,
       username,
       hashedPassword,
-      role || 'student', // Default role is 'teacher' if not specified
-      first_name,
-      last_name,
+      role || 'user',
       email,
-      phone_number,
-      date_of_birth,
     ]);
 
     // If the insertion fails, return an error message

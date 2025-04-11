@@ -11,6 +11,7 @@ const Login = () => {
   const [success, setSuccess] = useState('');
   const { setUser } = useAuth();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   const [formData, setFormData] = useState({
     email: '',
@@ -26,6 +27,7 @@ const Login = () => {
     e.preventDefault();
 
     try {
+      setLoading(true); // Disable submit button
       // const accessToken = localStorage.getItem('token');
 
       const response = await login(formData);
@@ -37,14 +39,13 @@ const Login = () => {
           const decodedToken = jwtDecode(token.userToken);
           setUser(decodedToken);
           setSuccess(response.data.message);
+          setError('');
 
           setFormData({ email: '', password: '' });
 
           setTimeout(() => {
             if (decodedToken.role === 'admin') {
               navigate('/admin');
-            } else if(decodedToken.role === 'teacher') {
-              navigate('/teacher');
             } else {
               navigate('/user');
             }
@@ -57,6 +58,8 @@ const Login = () => {
         `Something went wrong. please try again ${err}`;
       // console.log(err);
       setError(errorMessage);
+    } finally {
+      setLoading(false); // Re-enable submit button after the request
     }
   };
 
@@ -65,11 +68,13 @@ const Login = () => {
       <div className='bg-white shadow-lg rounded-lg p-8 max-w-md w-full'>
         <h2 className='text-2xl font-bold text-center mb-6'>Login</h2>
 
-        {error ? (
-          <p className='text-red-600 block text-[14px] font-medium text-center'>
+        {error && (
+          <p className='text-red-600 block text-[14px] font-medium text-center bg-red-100 py-2 rounded'>
             {error}
           </p>
-        ) : (
+        )}
+
+        {success && (
           <p className='text-green-700 text-[14px] font-medium text-center'>
             {success}
           </p>
@@ -107,8 +112,11 @@ const Login = () => {
 
           <button
             type='submit'
-            className='w-full bg-blue-500 text-white font-bold py-2 rounded-lg hover:bg-blue-600 transition cursor-pointer'>
-            Login
+            disabled={loading}
+            className={`w-full py-2 rounded-lg transition cursor-pointer ${
+              loading ? 'bg-gray-400' : 'bg-blue-500 hover:bg-blue-600'
+            } text-white font-bold`}>
+            {loading ? 'Registering...' : 'Register'}
           </button>
         </form>
 
