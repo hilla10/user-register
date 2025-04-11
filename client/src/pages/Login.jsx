@@ -43,6 +43,8 @@ const Login = () => {
           setTimeout(() => {
             if (decodedToken.role === 'admin') {
               navigate('/admin');
+            } else if(decodedToken.role === 'teacher') {
+              navigate('/teacher');
             } else {
               navigate('/user');
             }

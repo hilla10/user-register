@@ -1,8 +1,8 @@
 import axios from 'axios';
 import getAuth from '../utils/Auth';
 
-const apiUrl = import.meta.env.VITE_API_URL;
-console.log(apiUrl);
+const apiUrl = 'http://localhost:3000/api/auth';
+
 const login = async (formData) => {
   const token = await getAuth();
   // console.log('token', token);
