@@ -1,7 +1,7 @@
 import axios from 'axios';
 import getAuth from '../utils/Auth';
 
-const apiUrl = 'https://user-register-h9i9.onrender.com/api/auth';
+const apiUrl = 'http://localhost:3000/api/auth';
 
 const login = async (formData) => {
   const token = await getAuth();
