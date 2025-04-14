@@ -19,6 +19,14 @@ app.use('/upload', express.static(path.join(__dirname, 'tmp/uploads')));
 
 const port = process.env.PORT;
 
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '/frontend/dist')));
+
+  app.get('/*path', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'frontend', 'dist', 'index.html'));
+  });
+}
+
 app.listen(port, () => {
   console.log(`the server is running on port ${port}`);
 });
