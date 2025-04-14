@@ -7,10 +7,12 @@ import bcrypt from 'bcrypt';
 // Import the custom module to generate a unique ID for users
 import uniqueId from '../helper/generateUniqueId.js';
 
-const register = async (formData) => {
+const register = async (formData, file) => {
   try {
     // Destructure the formData object to extract user inputs
     const { username, email, password, role } = formData;
+    const profile = file ? file.filename : null;
+
     // SQL query to check if a user already exists with the provided email
 
     const q = `SELECT * FROM users WHERE email = ? OR username = ?`;
@@ -75,15 +77,16 @@ const register = async (formData) => {
     const newUserId = uniqueId();
 
     // SQL query to insert the new user into the users table
-    const sql = `INSERT INTO users (user_id, username, email, password, role) VALUES (?, ?, ?, ?, ?)`;
+    const sql = `INSERT INTO users (user_id, username, email, password, role, profile) VALUES (?, ?, ?, ?, ?, ?)`;
 
     // Execute the insert query with the provided data
     const rows = await query(sql, [
       newUserId,
       username,
+      email,
       hashedPassword,
       role || 'user',
-      email,
+      profile || null,
     ]);
 
     // If the insertion fails, return an error message

@@ -1,11 +1,11 @@
 import jwt from 'jsonwebtoken';
 import login from '../models/login.model.js';
 import register from '../models/register.model.js';
+import updateUser from '../models/updateUser.model.js';
 
 const registerController = async (req, res) => {
   try {
-    const userRegister = await register(req.body);
-
+    const userRegister = await register(req.body, req.file);
     if (!userRegister.success) {
       return res.status(400).json({
         success: false,
@@ -16,6 +16,30 @@ const registerController = async (req, res) => {
     return res.status(200).json({
       success: true,
       message: userRegister.message,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      message: `An error occurred while processing your registration. Please try again later. ${error}`,
+    });
+  }
+};
+
+const updateUserController = async (req, res) => {
+  try {
+    const updatedUser = await updateUser(req.body, req.file, req.params);
+
+    if (!updatedUser.success) {
+      return res.status(400).json({
+        success: false,
+        message: updatedUser.message,
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: updatedUser.message,
     });
   } catch (error) {
     console.log(error);
@@ -73,4 +97,4 @@ const loginController = async (req, res) => {
 
 export default loginController;
 
-export { registerController, loginController };
+export { registerController, loginController, updateUserController };

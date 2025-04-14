@@ -15,14 +15,10 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(router);
-app.use('/tmp/uploads', express.static(path.join(__dirname, 'tmp/uploads')));
+app.use('/upload', express.static(path.join(__dirname, 'tmp/uploads')));
 
 const port = process.env.PORT;
 
 app.listen(port, () => {
   console.log(`the server is running on port ${port}`);
 });
-
-// leacturer@gmail.com  67745172
-// teststudent@gmail.com	11111111
-// testStudent1@mail.com 12345678

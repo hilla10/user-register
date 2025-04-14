@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import { FaEye, FaEyeSlash } from 'react-icons/fa';
+
 import { Link, useNavigate } from 'react-router-dom';
 import { register } from '../api/Auth';
 import validateForm from '../utils/validate';
+import Form from '../components/Form';
 const AuthForm = () => {
   const navigate = useNavigate(null);
   const [showPassword, setShowPassword] = useState(false);
@@ -10,10 +11,11 @@ const AuthForm = () => {
   const [success, setSuccess] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const [formData, setFormData] = useState({
+  const [formInput, setFormInput] = useState({
     username: '',
     email: '',
     password: '',
+    profile: '',
   });
   const [inputError, setInputError] = useState({
     username: '',
@@ -21,9 +23,23 @@ const AuthForm = () => {
     password: '',
   });
 
+  const { username, email, password, profile } = formInput;
+
+  const formData = new FormData();
+
+  formData.append('username', username);
+  formData.append('email', email);
+  formData.append('password', password);
+  formData.append('profile', profile);
+
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    const { name, value, files, type } = e.target;
+
+    if (type === 'file') {
+      setFormInput((prev) => ({ ...prev, [name]: files[0] }));
+    } else {
+      setFormInput((prev) => ({ ...prev, [name]: value }));
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -31,11 +47,11 @@ const AuthForm = () => {
 
     try {
       setLoading(true); // Disable submit button
-      if (validateForm(formData, setInputError)) {
+      if (validateForm(formInput, setInputError, false)) {
         const response = await register(formData);
 
         if (response?.data?.success) {
-          setFormData({ username: '', email: '', password: '' });
+          setFormInput({ username: '', email: '', password: '' });
 
           // console.log(response);
           setSuccess(response.data.message);
@@ -73,72 +89,17 @@ const AuthForm = () => {
           </p>
         )}
 
-        <form className='space-y-4' onSubmit={handleSubmit}>
-          <div>
-            <label className='block font-medium'>Username</label>
-            <input
-              type='text'
-              name='username'
-              onChange={handleChange}
-              value={formData.username}
-              // required
-              className='w-full px-4 py-2 mt-1 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'
-            />
-            {inputError.username && (
-              <span className='text-right pt-2 text-[14px] text-red-600 block w-full'>
-                {inputError.username}
-              </span>
-            )}
-          </div>
-
-          <div>
-            <label className='block font-medium'>Email</label>
-            <input
-              // type='email'
-              name='email'
-              onChange={handleChange}
-              value={formData.email}
-              required
-              className='w-full px-4 py-2 mt-1 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'
-            />
-            {inputError.email && (
-              <span className='text-right pt-2 text-[14px] text-red-600 block  w-full'>
-                {inputError.email}
-              </span>
-            )}
-          </div>
-
-          <div className='relative'>
-            <label className='block font-medium'>Password</label>
-            <input
-              type={showPassword ? 'text' : 'password'}
-              name='password'
-              onChange={handleChange}
-              value={formData.password}
-              required
-              className='w-full px-4 py-2 mt-1 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'
-            />
-            <span
-              className='absolute right-4 top-10 cursor-pointer'
-              onClick={() => setShowPassword(!showPassword)}>
-              {showPassword ? <FaEyeSlash /> : <FaEye />}
-            </span>
-            {inputError.password && (
-              <span className='text-right pt-2 text-[14px] text-red-600 block  w-full'>
-                {inputError.password}
-              </span>
-            )}
-          </div>
-
-          <button
-            type='submit'
-            disabled={loading}
-            className={`w-full py-2 rounded-lg transition cursor-pointer ${
-              loading ? 'bg-gray-400' : 'bg-blue-500 hover:bg-blue-600'
-            } text-white font-bold`}>
-            {loading ? 'Registering...' : 'Register'}
-          </button>
-        </form>
+        <Form
+          handleSubmit={handleSubmit}
+          handleChange={handleChange}
+          formInput={formInput}
+          inputError={inputError}
+          showPassword={showPassword}
+          setShowPassword={setShowPassword}
+          loading={loading}
+          register={loading ? 'Registering...' : 'Register'}
+          image={formInput.profile}
+        />
 
         <p className='mt-4 text-center'>
           Already have an account?

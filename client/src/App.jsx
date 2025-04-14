@@ -1,7 +1,7 @@
 import React from 'react';
 import { AuthProvider } from '../context/AuthContext';
 import { Routes, Route } from 'react-router-dom';
-import AdminPage from './pages/AdminPage';
+import Admin from './pages/Admin';
 
 import PrivatePage from './pages/PrivatePage';
 import Login from './pages/Login';
@@ -14,6 +14,7 @@ import Footer from './components/Footer';
 import About from './pages/About';
 import Service from './pages/Service';
 import Contact from './pages/Contact';
+import UserPage from './pages/UserPage';
 
 const App = () => {
   return (
@@ -32,7 +33,15 @@ const App = () => {
             path='/admin'
             element={
               <PrivatePage roles={['admin']}>
-                <AdminPage />
+                <Admin />
+              </PrivatePage>
+            }
+          />
+          <Route
+            path='/user'
+            element={
+              <PrivatePage roles={['user']}>
+                <UserPage />
               </PrivatePage>
             }
           />

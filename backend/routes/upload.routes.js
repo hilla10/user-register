@@ -10,7 +10,7 @@ import adminMiddleware from '../middlewares/admin.middlewares.js';
 
 router.post(
   '/upload',
-  upload.array('images'),
+  upload.single('file'),
   errorHandler,
   authMiddleware,
   adminMiddleware,
