@@ -2,11 +2,11 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "backend/app.js",
   "scripts": {
-    "start": "cross-env NODE_ENV=production node app.js",
-    "build": "npm install && npm install --prefix frontend && npm run build --prefix frontend",
-    "dev": "cross-env NODE_ENV=development nodemon app.js"
+    "start": "cross-env NODE_ENV=production node backend/app.js",
+    "build": "npm install && npm install --prefix client && npm run build --prefix frontend",
+    "dev": "cross-env NODE_ENV=development nodemon backend/app.js"
   },
   "keywords": [],
   "author": "",
