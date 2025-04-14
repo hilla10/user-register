@@ -100,7 +100,7 @@ const Admin = () => {
       const response = await deleteUser(userId);
       toast.success('hello');
       if (response?.data?.success) {
-        // Update the frontend state by removing the deleted user
+        // Update the client state by removing the deleted user
         setData((prevData) =>
           prevData.filter((user) => user.user_id !== userId)
         );

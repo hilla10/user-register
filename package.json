@@ -5,7 +5,7 @@
   "main": "backend/app.js",
   "scripts": {
     "start": "cross-env NODE_ENV=production node backend/app.js",
-    "build": "npm install && npm install --prefix client && npm run build --prefix frontend",
+    "build": "npm install && npm install --prefix client && npm run build --prefix client",
     "dev": "cross-env NODE_ENV=development nodemon backend/app.js"
   },
   "keywords": [],
