@@ -7,7 +7,6 @@ import PrivatePage from './pages/PrivatePage';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Unauthorized from './pages/Unauthorized';
-import UploadedImage from './components/UploadedImage';
 import Home from './pages/Home';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
